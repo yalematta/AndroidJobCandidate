@@ -1,6 +1,7 @@
 package app.storytel.candidate.com.di
 
 import android.content.Context
+import app.storytel.candidate.com.BuildConfig
 import app.storytel.candidate.com.network.ApiService
 import app.storytel.candidate.com.network.NetworkInterceptor
 import dagger.Module
@@ -30,7 +31,7 @@ object AppModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(ApiService.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

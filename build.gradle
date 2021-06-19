@@ -29,3 +29,22 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    // dependencies versions
+    appCompat_version = '1.3.0'
+    constraintLayout_version = '2.0.4'
+    material_version = '1.3.0'
+    espresso_version = '3.0.2'
+    glide_version = '4.12.0'
+    hilt_version = '2.31-alpha'
+    hiltViewModel_version = '1.0.0-alpha03'
+    coroutines_version = '1.4.2'
+    lifecycle_version = '2.3.1'
+    activity_version = '1.2.3'
+    junit_version = '4.13.2'
+    ktx_version = '1.5.0'
+    retrofit_version = '2.9.0'
+    testRunner_version = '1.3.0'
+    testExtJunit_version = '1.1.2'
+}
