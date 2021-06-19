@@ -1,9 +1,9 @@
-package app.storytel.candidate.com;
+package app.storytel.candidate.com.model
 
-public class Comment {
-    public int postId;
-    public int id;
-    public String name;
-    public String email;
-    public String body;
-}
+data class Comment (
+    val postId: Int,
+    val id: Int,
+    val name: String,
+    val email: String,
+    val body: String
+)

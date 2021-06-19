@@ -1,8 +1,8 @@
-package app.storytel.candidate.com;
+package app.storytel.candidate.com.model
 
-public class Post {
-    public int userId;
-    public int id;
-    public String title;
-    public String body;
-}
+data class Post (
+    val userId: Int,
+    val id : Int,
+    val title: String,
+    val body: String
+)

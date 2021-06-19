@@ -1,9 +1,9 @@
-package app.storytel.candidate.com;
+package app.storytel.candidate.com.model
 
-public class Photo {
-    public int albumId;
-    public int id;
-    public String title;
-    public String url;
-    public String thumbnailUrl;
-}
+data class Photo(
+    val albumId: Int,
+    val id: Int,
+    val title: String,
+    val url: String,
+    val thumbnailUrl: String
+)
