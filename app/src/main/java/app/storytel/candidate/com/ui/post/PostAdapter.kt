@@ -8,8 +8,10 @@ import app.storytel.candidate.com.model.Photo
 import app.storytel.candidate.com.model.Post
 import app.storytel.candidate.com.model.PostAndImages
 import com.bumptech.glide.Glide
-import kotlin.random.Random
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import java.util.*
+import kotlin.random.Random
 
 class PostAdapter(): RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
@@ -46,8 +48,13 @@ class PostAdapter(): RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         fun bind(post: Post, photo: Photo) {
             binding.apply {
 
+                val url = GlideUrl(
+                    photo.thumbnailUrl, LazyHeaders.Builder()
+                        .addHeader("User-Agent", "your-user-agent")
+                        .build())
+
                 Glide.with(itemView)
-                    .load(photo.thumbnailUrl)
+                    .load(url)
                     .into(image)
 
                 title.text = post.title
