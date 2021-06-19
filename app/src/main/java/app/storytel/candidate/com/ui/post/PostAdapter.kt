@@ -13,7 +13,8 @@ import com.bumptech.glide.load.model.LazyHeaders
 import java.util.*
 import kotlin.random.Random
 
-class PostAdapter(): RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class PostAdapter(private val onItemClicked: ((Post, Photo) -> Unit)
+): RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     private var mData: PostAndImages = PostAndImages(ArrayList(), ArrayList())
 
@@ -28,7 +29,7 @@ class PostAdapter(): RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
         val photo = mData.photos[index]
         holder.bind(post, photo)
         holder.itemView.setOnClickListener {
-            // add click action
+            onItemClicked(post, photo)
         }
     }
 

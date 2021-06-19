@@ -1,5 +1,6 @@
 package app.storytel.candidate.com.ui.post
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import app.storytel.candidate.com.R
 import app.storytel.candidate.com.databinding.ActivityPostBinding
 import app.storytel.candidate.com.network.response.Result
+import app.storytel.candidate.com.ui.details.DetailsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +25,14 @@ class PostActivity : AppCompatActivity() {
         binding = ActivityPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val postAdapter = PostAdapter()
+        val postAdapter = PostAdapter(onItemClicked = { post, photo ->
+            val intent = Intent(this, DetailsActivity::class.java)
+            intent.putExtra(POST_ID, post.id)
+            intent.putExtra(POST_TITLE, post.title)
+            intent.putExtra(POST_BODY, post.body)
+            intent.putExtra(PHOTO_URL, photo.url)
+            startActivity(intent)
+        })
 
         binding.apply {
             setSupportActionBar(toolbar)
@@ -82,5 +91,12 @@ class PostActivity : AppCompatActivity() {
         return if (id == R.id.action_settings) {
             true
         } else super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        const val POST_ID = "POST_ID"
+        const val POST_TITLE = "POST_TITLE"
+        const val POST_BODY = "POST_BODY"
+        const val PHOTO_URL = "PHOTO_URL"
     }
 }
