@@ -1,6 +1,7 @@
 package app.storytel.candidate.com.ui.details
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -98,6 +99,16 @@ class DetailsActivity : AppCompatActivity() {
                 errorLayout.isVisible = false
                 commentsView.isVisible = true
             }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
