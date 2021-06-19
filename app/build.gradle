@@ -57,6 +57,14 @@ dependencies {
 
     // Glide
     implementation "com.github.bumptech.glide:glide:4.12.0"
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
+
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+    implementation 'androidx.activity:activity-ktx:1.2.3'
 }
 repositories {
     mavenCentral()
