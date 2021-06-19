@@ -1,73 +1,52 @@
-package app.storytel.candidate.com.ui.post;
+package app.storytel.candidate.com.ui.post
 
-import android.app.Activity;
-import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import app.storytel.candidate.com.databinding.PostItemBinding
+import app.storytel.candidate.com.model.Photo
+import app.storytel.candidate.com.model.Post
+import app.storytel.candidate.com.model.PostAndImages
+import kotlin.random.Random
+import java.util.*
 
-import com.bumptech.glide.RequestManager;
+class PostAdapter(): RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
-import java.util.Random;
+    private var mData: PostAndImages = PostAndImages(ArrayList(), ArrayList())
 
-import app.storytel.candidate.com.ui.details.DetailsActivity;
-import app.storytel.candidate.com.R;
-import app.storytel.candidate.com.model.PostAndImages;
-
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
-
-    private PostAndImages mData;
-    private RequestManager mRequestManager;
-    private Activity mActivity;
-
-    public PostAdapter(RequestManager requestManager, Activity activity) {
-        mRequestManager = requestManager;
-        mActivity = activity;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
+        val binding = PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PostViewHolder(binding)
     }
 
-    @Override
-    public PostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new PostViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item, parent, false));
+    override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
+        val post = mData.posts[position]
+        val index = Random.nextInt(mData.photos.size - 1)
+        val photo = mData.photos[index]
+        holder.bind(post, photo)
+        holder.itemView.setOnClickListener {
+            // add click action
+        }
     }
 
-    @Override
-    public void onBindViewHolder(PostViewHolder holder, int position) {
-        holder.title.setText(mData.mPosts.get(position).title);
-        holder.body.setText(mData.mPosts.get(position).body);
-        int index = new Random().nextInt(mData.mPhotos.size() - 1);
-        String imageUrl = mData.mPhotos.get(index).thumbnailUrl;
-        mRequestManager.load(imageUrl).into(holder.image);
-        holder.body.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.startActivity(new Intent(mActivity, DetailsActivity.class));
+    override fun getItemCount(): Int {
+        return mData.posts.size
+    }
+
+    fun setData(data: PostAndImages?) {
+        if (data != null) {
+            mData = data
+        }
+        notifyDataSetChanged()
+    }
+
+    class PostViewHolder(private val binding: PostItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(post: Post, photo: Photo) {
+            binding.apply {
+                title.text = post.title
+                body.text = post.body
             }
-        });
-    }
-
-    public void setData(PostAndImages data) {
-        mData = data;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getItemCount() {
-        return mData == null || mData.mPhotos == null ? 0 : mData.mPosts.size();
-    }
-
-    public class PostViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        TextView body;
-        ImageView image;
-
-        public PostViewHolder(View itemView) {
-            super(itemView);
-            title = itemView.findViewById(R.id.title);
-            body = itemView.findViewById(R.id.body);
-            image = itemView.findViewById(R.id.image);
         }
     }
 }
