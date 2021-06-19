@@ -7,18 +7,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import app.storytel.candidate.com.R
+import app.storytel.candidate.com.databinding.ActivityPostBinding
 
 class PostActivity : AppCompatActivity() {
 
-    var mRecyclerView: RecyclerView? = null
-    var mPostAdapter: PostAdapter? = null
+    private lateinit var binding: ActivityPostBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_scrolling)
+        binding = ActivityPostBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        binding.apply {
+            setSupportActionBar(toolbar)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
