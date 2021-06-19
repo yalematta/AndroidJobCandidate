@@ -1,4 +1,4 @@
-package app.storytel.candidate.com
+package app.storytel.candidate.com.ui.post
 
 import android.os.Bundle
 import android.view.Menu
@@ -6,8 +6,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
+import app.storytel.candidate.com.R
 
-class ScrollingActivity : AppCompatActivity() {
+class PostActivity : AppCompatActivity() {
 
     var mRecyclerView: RecyclerView? = null
     var mPostAdapter: PostAdapter? = null
