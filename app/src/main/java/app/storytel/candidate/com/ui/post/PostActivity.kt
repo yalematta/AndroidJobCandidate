@@ -34,9 +34,4 @@ class PostActivity : AppCompatActivity() {
             true
         } else super.onOptionsItemSelected(item)
     }
-
-    companion object {
-        private const val POSTS_URL = "https://jsonplaceholder.typicode.com/posts"
-        private const val PHOTOS_URL = "https://jsonplaceholder.typicode.com/photos"
-    }
 }
