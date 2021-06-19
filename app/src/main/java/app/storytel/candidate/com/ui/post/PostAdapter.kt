@@ -7,6 +7,7 @@ import app.storytel.candidate.com.databinding.PostItemBinding
 import app.storytel.candidate.com.model.Photo
 import app.storytel.candidate.com.model.Post
 import app.storytel.candidate.com.model.PostAndImages
+import app.storytel.candidate.com.util.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
@@ -49,15 +50,7 @@ class PostAdapter(private val onItemClicked: ((Post, Photo) -> Unit)
         fun bind(post: Post, photo: Photo) {
             binding.apply {
 
-                val url = GlideUrl(
-                    photo.thumbnailUrl, LazyHeaders.Builder()
-                        .addHeader("User-Agent", "your-user-agent")
-                        .build())
-
-                Glide.with(itemView)
-                    .load(url)
-                    .into(image)
-
+                image.loadImage(photo.thumbnailUrl)
                 title.text = post.title
                 body.text = post.body
             }

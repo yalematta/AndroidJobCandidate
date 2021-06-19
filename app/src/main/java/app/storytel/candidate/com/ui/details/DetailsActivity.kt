@@ -4,9 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import app.storytel.candidate.com.databinding.ActivityDetailsBinding
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaders
+import app.storytel.candidate.com.util.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,16 +23,9 @@ class DetailsActivity : AppCompatActivity() {
         binding.apply {
             setSupportActionBar(toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
             supportActionBar?.title = viewModel.postTitle
-
-            val url = GlideUrl(
-                viewModel.photoUrl, LazyHeaders.Builder()
-                    .addHeader("User-Agent", "your-user-agent")
-                    .build())
-
-            Glide.with(this@DetailsActivity)
-                .load(url)
-                .into(backdrop)
+            viewModel.photoUrl?.let { backdrop.loadImage(it) }
         }
 
         //TODO display the selected post from ScrollingActivity. Use mImageView and mTextView for image and body text. Change the title to use the post title
