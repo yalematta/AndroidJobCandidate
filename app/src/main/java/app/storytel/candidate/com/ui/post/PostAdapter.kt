@@ -7,6 +7,7 @@ import app.storytel.candidate.com.databinding.PostItemBinding
 import app.storytel.candidate.com.model.Photo
 import app.storytel.candidate.com.model.Post
 import app.storytel.candidate.com.model.PostAndImages
+import com.bumptech.glide.Glide
 import kotlin.random.Random
 import java.util.*
 
@@ -44,6 +45,11 @@ class PostAdapter(): RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
         fun bind(post: Post, photo: Photo) {
             binding.apply {
+
+                Glide.with(itemView)
+                    .load(photo.thumbnailUrl)
+                    .into(image)
+
                 title.text = post.title
                 body.text = post.body
             }
