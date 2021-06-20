@@ -28,6 +28,7 @@ class DetailsActivity : AppCompatActivity() {
             setSupportActionBar(toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.title = viewModel.postTitle
+            swipeLayout.isEnabled = false
         }
 
         getComments()
@@ -76,7 +77,19 @@ class DetailsActivity : AppCompatActivity() {
     private fun showLoadingIndicator(show: Boolean) {
         binding.apply {
             commentsView.isVisible = !show
-            progressBar.isVisible = show
+            swipeLayout.isRefreshing = show
+        }
+    }
+
+    private fun retryLoading() {
+        viewModel.postId?.let {
+            viewModel.loadData(it)
+        } ?: run {
+            getComments()
+        }
+        binding.apply {
+            errorLayout.isVisible = false
+            commentsView.isVisible = true
         }
     }
 
@@ -84,20 +97,14 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.apply {
 
-            commentsView.isVisible = false
-            progressBar.isVisible = false
             errorLayout.isVisible = true
+            commentsView.isVisible = false
+            swipeLayout.isRefreshing = false
 
             errorMessage.text = error?.message
 
             retryButton.setOnClickListener {
-                viewModel.postId?.let {
-                    viewModel.loadData(it)
-                } ?: run {
-                    getComments()
-                }
-                errorLayout.isVisible = false
-                commentsView.isVisible = true
+                retryLoading()
             }
         }
     }

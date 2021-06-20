@@ -55,12 +55,16 @@ class PostActivity : AppCompatActivity() {
                     else ->  setLoading(result is Result.Loading)
                 }
             })
+
+            content.swipeLayout.setOnRefreshListener {
+                viewModel.loadData()
+            }
         }
     }
 
     private fun setLoading(isLoading: Boolean) {
         binding.apply {
-            progressBar.isVisible = isLoading
+            content.swipeLayout.isRefreshing = isLoading
             content.recyclerView.isVisible = !isLoading
         }
     }
@@ -69,8 +73,8 @@ class PostActivity : AppCompatActivity() {
 
         binding.apply {
             errorLayout.isVisible = true
-            progressBar.isVisible = false
             content.recyclerView.isVisible = false
+            content.swipeLayout.isRefreshing = false
 
             errorMessage.text = error?.message
 
@@ -88,7 +92,8 @@ class PostActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        return if (id == R.id.action_settings) {
+        return if (id == R.id.action_refresh) {
+            viewModel.loadData()
             true
         } else super.onOptionsItemSelected(item)
     }

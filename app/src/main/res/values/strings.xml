@@ -4,4 +4,5 @@
     <string name="title_activity_details">Details</string>
     <string name="retry">Retry</string>
     <string name="no_comments_available">No comments available</string>
+    <string name="menu_refresh">Refresh</string>
 </resources>

@@ -8,9 +8,6 @@ import app.storytel.candidate.com.model.Photo
 import app.storytel.candidate.com.model.Post
 import app.storytel.candidate.com.model.PostAndImages
 import app.storytel.candidate.com.util.loadImage
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaders
 import java.util.*
 import kotlin.random.Random
 

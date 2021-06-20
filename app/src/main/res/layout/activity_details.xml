@@ -44,127 +44,133 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/commentsView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/commentsView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="24dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="16dp"
-                tool:text="this is the details" />
-
-            <TextView
-                android:id="@+id/no_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/no_comments_available"
-                android:visibility="gone"
-                tool:visibility="visible"/>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/comment1"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/card_margin">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="24dp">
 
-                <LinearLayout
-                    style="@style/Widget.CardContent"
+                <TextView
+                    android:id="@+id/details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="16dp"
+                    tool:text="this is the details" />
+
+                <TextView
+                    android:id="@+id/no_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/no_comments_available"
+                    android:visibility="gone"
+                    tool:visibility="visible" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/comment1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/card_margin">
 
-                    <TextView
-                        android:id="@+id/title1"
+                    <LinearLayout
+                        style="@style/Widget.CardContent"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        tool:text="Comment title1" />
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/description1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tool:text="Comment text1" />
+                        <TextView
+                            android:id="@+id/title1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                            tool:text="Comment title1" />
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/description1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tool:text="Comment text1" />
 
-            </androidx.cardview.widget.CardView>
+                    </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/comment2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:layout_marginBottom="@dimen/card_margin">
+                </androidx.cardview.widget.CardView>
 
-                <LinearLayout
-                    style="@style/Widget.CardContent"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/comment2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/card_margin"
+                    android:layout_marginRight="@dimen/card_margin"
+                    android:layout_marginBottom="@dimen/card_margin">
 
-                    <TextView
-                        android:id="@+id/title2"
+                    <LinearLayout
+                        style="@style/Widget.CardContent"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        tool:text="Comment title2" />
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/description2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tool:text="Comment text2" />
+                        <TextView
+                            android:id="@+id/title2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                            tool:text="Comment title2" />
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/description2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tool:text="Comment text2" />
 
-            </androidx.cardview.widget.CardView>
+                    </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/comment3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:layout_marginBottom="@dimen/card_margin">
+                </androidx.cardview.widget.CardView>
 
-                <LinearLayout
-                    style="@style/Widget.CardContent"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/comment3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/card_margin"
+                    android:layout_marginRight="@dimen/card_margin"
+                    android:layout_marginBottom="@dimen/card_margin">
 
-                    <TextView
-                        android:id="@+id/title3"
+                    <LinearLayout
+                        style="@style/Widget.CardContent"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        tool:text="Comment title3" />
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/description3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tool:text="Comment text3" />
+                        <TextView
+                            android:id="@+id/title3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                            tool:text="Comment title3" />
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/description3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tool:text="Comment text3" />
 
-            </androidx.cardview.widget.CardView>
+                    </LinearLayout>
 
-        </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-    </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
@@ -177,44 +183,30 @@
         app:layout_anchorGravity="bottom|right|end"
         tool:ignore="ContentDescription" />
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/error_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        tool:visibility="visible">
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
+        <TextView
+            android:id="@+id/error_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="invisible"
-            tool:visibility="visible" />
-
-        <LinearLayout
-            android:id="@+id/error_layout"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_margin="8dp"
             android:gravity="center_horizontal"
-            android:visibility="invisible"
-            tool:visibility="visible">
+            tool:text="Error Message" />
 
-            <TextView
-                android:id="@+id/error_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:gravity="center_horizontal"
-                tool:text="Error Message" />
+        <Button
+            android:id="@+id/retry_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/retry" />
 
-            <Button
-                android:id="@+id/retry_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/retry" />
-
-        </LinearLayout>
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -34,6 +34,7 @@ class NetworkInterceptor(context: Context) : Interceptor {
             }
         } else {
             connectivityManager.run {
+                @Suppress("DEPRECATION")
                 connectivityManager.activeNetworkInfo?.also {
                     return it.isConnected
                 }
