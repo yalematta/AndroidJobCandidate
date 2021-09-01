@@ -8,18 +8,23 @@ import androidx.core.view.isVisible
 import app.storytel.candidate.com.databinding.ActivityDetailsBinding
 import app.storytel.candidate.com.model.Comment
 import app.storytel.candidate.com.network.response.Result
+import app.storytel.candidate.com.ui.post.PostActivity.Companion.PHOTO_URL
+import app.storytel.candidate.com.ui.post.PostActivity.Companion.POST_BODY
+import app.storytel.candidate.com.ui.post.PostActivity.Companion.POST_ID
+import app.storytel.candidate.com.ui.post.PostActivity.Companion.POST_TITLE
 import app.storytel.candidate.com.util.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDetailsBinding
+    private var _binding: ActivityDetailsBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: DetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailsBinding.inflate(layoutInflater)
+        _binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         viewModel.init(intent)
@@ -29,6 +34,21 @@ class DetailsActivity : AppCompatActivity() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.title = viewModel.postTitle
             swipeLayout.isEnabled = false
+        }
+
+        savedInstanceState?.let { inState ->
+            (inState[POST_ID] as Int).let { postId ->
+                viewModel.postId = postId
+            }
+            (inState[PHOTO_URL] as String).let { photoUrl ->
+                viewModel.photoUrl = photoUrl
+            }
+            (inState[POST_TITLE] as String).let { postTitle ->
+                viewModel.postTitle = postTitle
+            }
+            (inState[POST_BODY] as String).let { postBody ->
+                viewModel.postBody = postBody
+            }
         }
 
         getComments()
@@ -69,7 +89,7 @@ class DetailsActivity : AppCompatActivity() {
                 }
             }
 
-            viewModel.photoUrl?.let { backdrop.loadImage(it) }
+            viewModel.photoUrl?.let { backdrop.loadImage(it, details) }
             details.text = viewModel.postBody
         }
     }
@@ -117,5 +137,18 @@ class DetailsActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(POST_ID, viewModel.postId!!)
+        outState.putString(PHOTO_URL, viewModel.photoUrl!!)
+        outState.putString(POST_TITLE, viewModel.postTitle!!)
+        outState.putString(POST_BODY, viewModel.postBody!!)
     }
 }

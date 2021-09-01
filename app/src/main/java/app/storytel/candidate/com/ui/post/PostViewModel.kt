@@ -1,20 +1,19 @@
 package app.storytel.candidate.com.ui.post
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import app.storytel.candidate.com.model.Photo
 import app.storytel.candidate.com.model.Post
 import app.storytel.candidate.com.model.PostAndImages
 import app.storytel.candidate.com.network.ApiService
+import app.storytel.candidate.com.network.Repository
 import app.storytel.candidate.com.network.response.Result
+import dagger.assisted.Assisted
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PostViewModel @Inject constructor(private val apiService: ApiService) : ViewModel() {
+class PostViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     private val postsAndImages = MutableLiveData<Result<PostAndImages>>().apply {
         this.value = Result.Loading<PostAndImages>(null)
@@ -31,9 +30,9 @@ class PostViewModel @Inject constructor(private val apiService: ApiService) : Vi
         viewModelScope.launch {
             try {
                 postsAndImages.postValue(Result.Loading<PostAndImages>( null))
-                when (val posts = fetchPosts()) {
+                when (val posts = repository.fetchPosts()) {
                     is Result.Success -> {
-                        when (val images = fetchPhotos()) {
+                        when (val images = repository.fetchPhotos()) {
                             is Result.Success -> postsAndImages.postValue(
                                 Result.Success(PostAndImages(posts.data, images.data))
                             )
@@ -45,24 +44,6 @@ class PostViewModel @Inject constructor(private val apiService: ApiService) : Vi
             } catch (e: Exception) {
                 postsAndImages.postValue(Result.Failure(e))
             }
-        }
-    }
-
-    private suspend fun fetchPosts(): Result<List<Post>> {
-        return try {
-            val response = apiService.getPosts()
-            Result.Success(response)
-        } catch (ex: Exception) {
-            Result.Failure(ex)
-        }
-    }
-
-    private suspend fun fetchPhotos(): Result<List<Photo>> {
-        return try {
-            val response = apiService.getPhotos()
-            Result.Success(response)
-        } catch (ex: Exception) {
-            Result.Failure(ex)
         }
     }
 

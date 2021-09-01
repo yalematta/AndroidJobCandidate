@@ -1,5 +1,6 @@
 package app.storytel.candidate.com.model
 
+
 data class Post (
     val userId: Int,
     val id : Int,

@@ -67,7 +67,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginEnd="16dp"
-                    tool:text="this is the details" />
+                    tool:text="this is the details"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/no_comment"

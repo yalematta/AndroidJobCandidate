@@ -2,6 +2,7 @@ package app.storytel.candidate.com.ui.post
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -17,12 +18,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PostActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPostBinding
+    private var _binding: ActivityPostBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: PostViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPostBinding.inflate(layoutInflater)
+        _binding = ActivityPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val postAdapter = PostAdapter(onItemClicked = { post, photo ->
@@ -38,6 +40,7 @@ class PostActivity : AppCompatActivity() {
             setSupportActionBar(toolbar)
 
             content.recyclerView.apply {
+                setHasFixedSize(true)
                 adapter = postAdapter
                 layoutManager = LinearLayoutManager(this@PostActivity)
             }
@@ -96,6 +99,12 @@ class PostActivity : AppCompatActivity() {
             viewModel.loadData()
             true
         } else super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.content.recyclerView.adapter = null
+        _binding = null
     }
 
     companion object {
