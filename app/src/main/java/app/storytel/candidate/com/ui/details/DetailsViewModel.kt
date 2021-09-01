@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.storytel.candidate.com.model.Comment
-import app.storytel.candidate.com.network.ApiService
+import app.storytel.candidate.com.network.Repository
 import app.storytel.candidate.com.network.response.Result
 import app.storytel.candidate.com.ui.post.PostActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailsViewModel @Inject constructor(private val apiService: ApiService) : ViewModel() {
+class DetailsViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     private val comments = MutableLiveData<Result<List<Comment>>>().apply {
         value = Result.Loading<List<Comment>>(null)
@@ -54,18 +54,9 @@ class DetailsViewModel @Inject constructor(private val apiService: ApiService) :
 
     fun loadData(postId: Int) {
         viewModelScope.launch {
-            fetchComments(postId)
-        }
-    }
-
-    private suspend fun fetchComments(postId: Int) {
-        comments.postValue(Result.Loading<List<Comment>>(null))
-
-        try {
-            val response = apiService.getComments(postId)
-            comments.postValue(Result.Success(response))
-        } catch (e: Exception) {
-            comments.postValue(Result.Failure(e))
+            comments.postValue(Result.Loading<List<Comment>>(null))
+            val response = repository.fetchComments(postId)
+            comments.postValue(response)
         }
     }
 }

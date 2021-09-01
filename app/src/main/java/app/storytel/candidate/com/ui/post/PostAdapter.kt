@@ -2,6 +2,7 @@ package app.storytel.candidate.com.ui.post
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import app.storytel.candidate.com.databinding.PostItemBinding
 import app.storytel.candidate.com.model.Photo
@@ -11,8 +12,9 @@ import app.storytel.candidate.com.util.loadImage
 import java.util.*
 import kotlin.random.Random
 
-class PostAdapter(private val onItemClicked: ((Post, Photo) -> Unit)
-): RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
+class PostAdapter(
+    private val onItemClicked: ((Post, Photo) -> Unit)
+) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     private var mData: PostAndImages = PostAndImages(ArrayList(), ArrayList())
 
@@ -37,20 +39,43 @@ class PostAdapter(private val onItemClicked: ((Post, Photo) -> Unit)
 
     fun setData(data: PostAndImages?) {
         if (data != null) {
+            val oldPosts = mData.posts
+            val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(PostDiffCallback(oldPosts, data.posts))
             mData = data
+            diffResult.dispatchUpdatesTo(this)
         }
-        notifyDataSetChanged()
     }
 
-    class PostViewHolder(private val binding: PostItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class PostViewHolder(private val binding: PostItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(post: Post, photo: Photo) {
             binding.apply {
 
-                image.loadImage(photo.thumbnailUrl)
+                image.loadImage(photo.thumbnailUrl, title, body)
                 title.text = post.title
                 body.text = post.body
             }
         }
+    }
+
+    class PostDiffCallback(private var oldPosts: List<Post>, private var newPosts: List<Post>) : DiffUtil.Callback() {
+
+        override fun getOldListSize(): Int {
+            return oldPosts.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newPosts.size
+        }
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldPosts[oldItemPosition].id == newPosts[newItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldPosts[oldItemPosition] == newPosts[newItemPosition]
+        }
+
     }
 }
